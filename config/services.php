@@ -14,6 +14,11 @@ return [
     |
     */
 
+    'google' => [
+        'credentials' => env('GOOGLE_CREDENTIALS_PATH', 'storage/app/google/credentials.json'),
+        'read_range' => env('GOOGLE_SHEETS_READ_RANGE', 'A1:ZZ'),
+    ],
+
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],

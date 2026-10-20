@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\GoogleSheets\SheetReadException;
+use Google\Client;
+use Google\Service\Sheets;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
@@ -12,7 +15,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(Sheets::class, function (): Sheets {
+            $path = config('services.google.credentials');
+
+            if (! str_starts_with($path, DIRECTORY_SEPARATOR)) {
+                $path = base_path($path);
+            }
+
+            if (! is_file($path)) {
+                throw SheetReadException::missingCredentials($path);
+            }
+
+            $client = new Client;
+            $client->setApplicationName(config('app.name'));
+            $client->setScopes([Sheets::SPREADSHEETS_READONLY]);
+            $client->setAuthConfig($path);
+
+            return new Sheets($client);
+        });
     }
 
     /**
