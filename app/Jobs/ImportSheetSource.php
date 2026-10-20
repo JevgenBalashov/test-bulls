@@ -7,6 +7,7 @@ use App\Services\Import\ImportService;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Throwable;
 
 class ImportSheetSource implements ShouldBeUnique, ShouldQueue
 {
@@ -26,5 +27,16 @@ class ImportSheetSource implements ShouldBeUnique, ShouldQueue
     public function uniqueId(): string
     {
         return (string) $this->source->id;
+    }
+
+    public function failed(Throwable $exception): void
+    {
+        $this->source->runs()
+            ->where('status', 'running')
+            ->update([
+                'status' => 'failed',
+                'finished_at' => now(),
+                'error_message' => $exception->getMessage(),
+            ]);
     }
 }

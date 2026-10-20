@@ -2,17 +2,20 @@
 
 namespace App\Services\GoogleSheets;
 
+use Closure;
 use Google\Service\Exception as GoogleServiceException;
 use Google\Service\Sheets;
 
 class GoogleSheetsClient
 {
-    public function __construct(private readonly Sheets $sheets) {}
+    private ?Sheets $sheets = null;
+
+    public function __construct(private readonly Closure $factory) {}
 
     public function readTab(string $spreadsheetId, string $tabName, int $headerRow = 1, int $dataStartRow = 2): SheetData
     {
         try {
-            $response = $this->sheets->spreadsheets_values->get($spreadsheetId, $this->range($tabName));
+            $response = $this->sheets()->spreadsheets_values->get($spreadsheetId, $this->range($tabName));
         } catch (GoogleServiceException $exception) {
             if ($exception->getCode() === 400) {
                 throw SheetReadException::tabNotFound($tabName, $spreadsheetId);
@@ -22,6 +25,11 @@ class GoogleSheetsClient
         }
 
         return SheetData::fromValues($response->getValues() ?? [], $headerRow, $dataStartRow);
+    }
+
+    private function sheets(): Sheets
+    {
+        return $this->sheets ??= ($this->factory)();
     }
 
     private function range(string $tabName): string

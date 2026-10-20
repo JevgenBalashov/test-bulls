@@ -81,6 +81,6 @@ class GoogleSheetsClientTest extends TestCase
         $sheets = Mockery::mock(Sheets::class);
         $sheets->spreadsheets_values = $values;
 
-        return new GoogleSheetsClient($sheets);
+        return new GoogleSheetsClient(fn () => $sheets);
     }
 }
