@@ -26,7 +26,7 @@ class SheetMapping extends Model
 
     public function columns(): HasMany
     {
-        return $this->hasMany(SheetMappingColumn::class);
+        return $this->hasMany(SheetMappingColumn::class)->orderBy('id');
     }
 
     public function uniqueKeyColumns(): HasMany
