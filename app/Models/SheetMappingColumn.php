@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SheetMappingColumn extends Model
 {
+    public const DATA_TYPES = [
+        'string',
+        'text',
+        'integer',
+        'decimal',
+        'boolean',
+        'date',
+        'datetime',
+    ];
+
     protected $fillable = [
         'sheet_mapping_id',
         'source_column',

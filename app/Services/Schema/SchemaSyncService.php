@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Schema;
 
 class SchemaSyncService
 {
-    private const RESERVED_TABLES = [
+    public const RESERVED_TABLES = [
         'migrations',
         'users',
         'password_reset_tokens',

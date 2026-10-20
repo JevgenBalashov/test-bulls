@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class SheetSource extends Model
 {
@@ -27,5 +28,10 @@ class SheetSource extends Model
     public function runs(): HasMany
     {
         return $this->hasMany(ImportRun::class);
+    }
+
+    public function latestRun(): HasOne
+    {
+        return $this->hasOne(ImportRun::class)->latestOfMany();
     }
 }
