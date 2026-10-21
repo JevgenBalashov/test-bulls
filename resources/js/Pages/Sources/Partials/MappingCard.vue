@@ -121,12 +121,12 @@ defineExpose({ fillSourceColumn });
                         <tr
                             class="text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                         >
-                            <th class="px-3 py-2">Sheet header</th>
-                            <th class="px-3 py-2">Table column</th>
-                            <th class="px-3 py-2">Type</th>
-                            <th class="px-3 py-2 text-center">Nullable</th>
-                            <th class="px-3 py-2 text-center">Unique key</th>
-                            <th class="px-3 py-2">
+                            <th class="px-4 py-2">Sheet header</th>
+                            <th class="px-4 py-2">Table column</th>
+                            <th class="px-4 py-2">Type</th>
+                            <th class="px-4 py-2 text-center">Nullable</th>
+                            <th class="px-4 py-2 text-center">Unique key</th>
+                            <th class="px-4 py-2">
                                 <span class="sr-only">Actions</span>
                             </th>
                         </tr>
@@ -144,7 +144,7 @@ defineExpose({ fillSourceColumn });
                         <tr v-if="mapping.columns.length === 0">
                             <td
                                 colspan="6"
-                                class="px-3 py-4 text-sm text-gray-500"
+                                class="px-4 py-4 text-sm text-gray-500"
                             >
                                 No columns mapped yet, nothing will be written
                                 to this table.
@@ -156,7 +156,7 @@ defineExpose({ fillSourceColumn });
 
             <form
                 @submit.prevent="addColumn"
-                class="space-y-4 rounded-md bg-gray-50 p-4"
+                class="space-y-6 rounded-md bg-gray-50 p-4"
             >
                 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <div>
@@ -241,7 +241,9 @@ defineExpose({ fillSourceColumn });
                             Unique key
                         </span>
                     </label>
+                </div>
 
+                <div class="border-t border-gray-200 pt-4">
                     <PrimaryButton :disabled="form.processing">
                         Add column
                     </PrimaryButton>

@@ -48,7 +48,7 @@ const cancel = () => {
 
 <template>
     <tr v-if="editing" class="bg-gray-50 align-top">
-        <td class="px-3 py-3">
+        <td class="px-4 py-3">
             <TextInput
                 v-model="form.source_column"
                 type="text"
@@ -60,7 +60,7 @@ const cancel = () => {
             <InputError class="mt-1" :message="form.errors.source_column" />
         </td>
 
-        <td class="px-3 py-3">
+        <td class="px-4 py-3">
             <TextInput
                 v-model="form.target_column"
                 type="text"
@@ -72,7 +72,7 @@ const cancel = () => {
             <InputError class="mt-1" :message="form.errors.target_column" />
         </td>
 
-        <td class="px-3 py-3">
+        <td class="px-4 py-3">
             <select
                 v-model="form.data_type"
                 class="block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
@@ -86,15 +86,15 @@ const cancel = () => {
             <InputError class="mt-1" :message="form.errors.data_type" />
         </td>
 
-        <td class="px-3 py-3 text-center">
+        <td class="px-4 py-3 text-center">
             <Checkbox v-model:checked="form.is_nullable" />
         </td>
 
-        <td class="px-3 py-3 text-center">
+        <td class="px-4 py-3 text-center">
             <Checkbox v-model:checked="form.is_unique_key" />
         </td>
 
-        <td class="px-3 py-3">
+        <td class="px-4 py-3">
             <div class="flex items-center justify-end gap-2">
                 <PrimaryButton :disabled="form.processing" @click="submit">
                     Save
@@ -106,37 +106,33 @@ const cancel = () => {
     </tr>
 
     <tr v-else :class="{ 'bg-amber-50': column.pending_in_table }">
-        <td class="px-3 py-2 text-sm text-gray-700">
+        <td class="px-4 py-2 text-sm text-gray-700">
             {{ column.source_column }}
         </td>
 
-        <td class="px-3 py-2 text-sm">
+        <td class="px-4 py-2 text-sm">
             <span class="font-mono text-gray-900">
                 {{ column.target_column }}
             </span>
 
-            <Badge
-                v-if="column.pending_in_table"
-                tone="amber"
-                class="ms-2"
-            >
+            <Badge v-if="column.pending_in_table" tone="amber" class="ms-2">
                 will be added
             </Badge>
         </td>
 
-        <td class="px-3 py-2 text-sm text-gray-600">
+        <td class="px-4 py-2 text-sm text-gray-600">
             {{ column.data_type }}
         </td>
 
-        <td class="px-3 py-2 text-center text-sm text-gray-600">
+        <td class="px-4 py-2 text-center text-sm text-gray-600">
             {{ column.is_nullable ? 'yes' : 'no' }}
         </td>
 
-        <td class="px-3 py-2 text-center text-sm text-gray-600">
+        <td class="px-4 py-2 text-center text-sm text-gray-600">
             {{ column.is_unique_key ? 'yes' : 'no' }}
         </td>
 
-        <td class="px-3 py-2">
+        <td class="px-4 py-2">
             <div class="flex items-center justify-end gap-2">
                 <SecondaryButton @click="editing = true">Edit</SecondaryButton>
 

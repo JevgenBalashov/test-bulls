@@ -52,7 +52,7 @@ const submit = () => {
 </script>
 
 <template>
-    <form @submit.prevent="submit" class="space-y-4">
+    <form @submit.prevent="submit" class="space-y-6">
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div class="lg:col-span-2">
                 <InputLabel :for="`${uid}-name`" value="Tab name" />
@@ -105,12 +105,14 @@ const submit = () => {
             </div>
         </div>
 
-        <div class="flex flex-wrap items-center gap-4">
-            <label class="flex items-center">
-                <Checkbox v-model:checked="form.is_active" />
-                <span class="ms-2 text-sm text-gray-600">Active</span>
-            </label>
+        <label class="flex items-center">
+            <Checkbox v-model:checked="form.is_active" />
+            <span class="ms-2 text-sm text-gray-600">Active</span>
+        </label>
 
+        <div
+            class="flex flex-wrap items-center gap-3 border-t border-gray-200 pt-4"
+        >
             <PrimaryButton :disabled="form.processing">
                 {{ tab ? 'Save tab' : 'Add tab' }}
             </PrimaryButton>

@@ -24,7 +24,9 @@ const props = defineProps({
 
 const emit = defineEmits(['saved', 'cancel']);
 
-const uid = props.mapping ? `mapping-${props.mapping.id}` : `mapping-new-${props.tabId}`;
+const uid = props.mapping
+    ? `mapping-${props.mapping.id}`
+    : `mapping-new-${props.tabId}`;
 
 const form = useForm({
     target_table: props.mapping?.target_table ?? '',
@@ -55,7 +57,7 @@ const submit = () => {
 </script>
 
 <template>
-    <form @submit.prevent="submit" class="space-y-4">
+    <form @submit.prevent="submit" class="space-y-6">
         <div class="grid gap-4 sm:grid-cols-2">
             <div>
                 <InputLabel :for="`${uid}-table`" value="Target table" />
@@ -79,7 +81,11 @@ const submit = () => {
                     v-model="form.write_mode"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 >
-                    <option v-for="mode in writeModes" :key="mode" :value="mode">
+                    <option
+                        v-for="mode in writeModes"
+                        :key="mode"
+                        :value="mode"
+                    >
                         {{ mode }}
                     </option>
                 </select>
@@ -88,12 +94,14 @@ const submit = () => {
             </div>
         </div>
 
-        <div class="flex flex-wrap items-center gap-4">
-            <label class="flex items-center">
-                <Checkbox v-model:checked="form.is_active" />
-                <span class="ms-2 text-sm text-gray-600">Active</span>
-            </label>
+        <label class="flex items-center">
+            <Checkbox v-model:checked="form.is_active" />
+            <span class="ms-2 text-sm text-gray-600">Active</span>
+        </label>
 
+        <div
+            class="flex flex-wrap items-center gap-3 border-t border-gray-200 pt-4"
+        >
             <PrimaryButton :disabled="form.processing">
                 {{ mapping ? 'Save table' : 'Add target table' }}
             </PrimaryButton>

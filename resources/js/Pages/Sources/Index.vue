@@ -22,11 +22,15 @@ const sourceToDelete = ref(null);
 const deleting = ref(false);
 
 const startImport = (source) => {
-    router.post(route('sources.import', source.id), {}, {
-        preserveScroll: true,
-        onStart: () => (importing.value = source.id),
-        onFinish: () => (importing.value = null),
-    });
+    router.post(
+        route('sources.import', source.id),
+        {},
+        {
+            preserveScroll: true,
+            onStart: () => (importing.value = source.id),
+            onFinish: () => (importing.value = null),
+        },
+    );
 };
 
 const closeModal = () => (sourceToDelete.value = null);
@@ -179,9 +183,7 @@ const destroySource = () => {
                                             </SecondaryButton>
 
                                             <DangerButton
-                                                @click="
-                                                    sourceToDelete = source
-                                                "
+                                                @click="sourceToDelete = source"
                                             >
                                                 Delete
                                             </DangerButton>
@@ -193,7 +195,7 @@ const destroySource = () => {
                     </div>
                 </div>
 
-                <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+                <div class="bg-white p-6 shadow sm:rounded-lg">
                     <header>
                         <h2 class="text-lg font-medium text-gray-900">
                             New source

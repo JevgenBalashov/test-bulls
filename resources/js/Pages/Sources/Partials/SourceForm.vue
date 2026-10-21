@@ -39,7 +39,7 @@ const submit = () => {
 </script>
 
 <template>
-    <form @submit.prevent="submit" class="space-y-4">
+    <form @submit.prevent="submit" class="space-y-6">
         <div class="grid gap-4 sm:grid-cols-2">
             <div>
                 <InputLabel :for="`${uid}-name`" value="Name" />
@@ -87,7 +87,7 @@ const submit = () => {
             </span>
         </label>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 border-t border-gray-200 pt-4">
             <PrimaryButton :disabled="form.processing">
                 {{ source ? 'Save' : 'Create source' }}
             </PrimaryButton>
@@ -98,10 +98,7 @@ const submit = () => {
                 leave-active-class="transition ease-in-out"
                 leave-to-class="opacity-0"
             >
-                <p
-                    v-if="form.recentlySuccessful"
-                    class="text-sm text-gray-600"
-                >
+                <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">
                     Saved.
                 </p>
             </Transition>

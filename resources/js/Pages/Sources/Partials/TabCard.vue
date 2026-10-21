@@ -88,7 +88,9 @@ const destroyTab = () => {
                     :disabled="loadingHeaders"
                     @click="loadHeaders"
                 >
-                    {{ loadingHeaders ? 'Loading' : 'Load headers from Google' }}
+                    {{
+                        loadingHeaders ? 'Loading' : 'Load headers from Google'
+                    }}
                 </SecondaryButton>
 
                 <SecondaryButton @click="editing = !editing">
@@ -118,7 +120,10 @@ const destroyTab = () => {
                     the sheet header field below.
                 </p>
 
-                <div v-if="preview.headers.length" class="mt-2 flex flex-wrap gap-2">
+                <div
+                    v-if="preview.headers.length"
+                    class="mt-2 flex flex-wrap gap-2"
+                >
                     <button
                         v-for="(header, index) in preview.headers"
                         :key="index"

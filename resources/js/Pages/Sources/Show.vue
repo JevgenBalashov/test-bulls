@@ -31,11 +31,15 @@ const props = defineProps({
 const importing = ref(false);
 
 const startImport = () => {
-    router.post(route('sources.import', props.source.id), {}, {
-        preserveScroll: true,
-        onStart: () => (importing.value = true),
-        onFinish: () => (importing.value = false),
-    });
+    router.post(
+        route('sources.import', props.source.id),
+        {},
+        {
+            preserveScroll: true,
+            onStart: () => (importing.value = true),
+            onFinish: () => (importing.value = false),
+        },
+    );
 };
 </script>
 
@@ -77,7 +81,7 @@ const startImport = () => {
             <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
                 <FlashMessage />
 
-                <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+                <div class="bg-white p-6 shadow sm:rounded-lg">
                     <header class="flex items-start justify-between gap-4">
                         <div>
                             <h2 class="text-lg font-medium text-gray-900">
@@ -105,11 +109,9 @@ const startImport = () => {
                     />
                 </div>
 
-                <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+                <div class="bg-white p-6 shadow sm:rounded-lg">
                     <header>
-                        <h2 class="text-lg font-medium text-gray-900">
-                            Tabs
-                        </h2>
+                        <h2 class="text-lg font-medium text-gray-900">Tabs</h2>
 
                         <p class="mt-1 text-sm text-gray-600">
                             Columns are matched by header name, so the order of
@@ -135,7 +137,7 @@ const startImport = () => {
                     </div>
                 </div>
 
-                <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+                <div class="bg-white p-6 shadow sm:rounded-lg">
                     <header>
                         <h2 class="text-lg font-medium text-gray-900">
                             New tab
@@ -147,10 +149,7 @@ const startImport = () => {
                         </p>
                     </header>
 
-                    <TabForm
-                        :source-id="source.id"
-                        class="mt-6 max-w-4xl"
-                    />
+                    <TabForm :source-id="source.id" class="mt-6 max-w-4xl" />
                 </div>
             </div>
         </div>
