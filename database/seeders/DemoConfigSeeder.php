@@ -12,7 +12,11 @@ class DemoConfigSeeder extends Seeder
 {
     public function run(): void
     {
-        $euTab = $this->tab('Sales Report EU', 'DEMO_SPREADSHEET_ID_EU', 'Daily Sales');
+        $euTab = $this->tab(
+            'Sales Report EU',
+            '11we9cD5aaNQStd1TPkZ1euvvHfzABGZ9WHko7VK_lHk',
+            'Daily Sales',
+        );
 
         $this->mapping($euTab, 'sales', [
             ['source' => 'date', 'target' => 'date', 'type' => 'date', 'key' => true],
@@ -26,7 +30,11 @@ class DemoConfigSeeder extends Seeder
             ['source' => 'price', 'target' => 'last_price', 'type' => 'decimal'],
         ]);
 
-        $usTab = $this->tab('Sales Report US', 'DEMO_SPREADSHEET_ID_US', 'Sales 2026');
+        $usTab = $this->tab(
+            'Sales Report US',
+            '1LS4fVq5btNHBcPkUerwGATuiIV_ycsoU7N_TJtRVCJs',
+            'Sales 2026',
+        );
 
         $this->mapping($usTab, 'sales', [
             ['source' => 'Amount', 'target' => 'amount', 'type' => 'integer'],
