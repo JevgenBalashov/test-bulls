@@ -18,6 +18,7 @@ Built with Laravel 12, MySQL 8, Inertia and Vue 3.
 
 ## Contents
 
+- [Trying it out](#trying-it-out)
 - [Requirements](#requirements)
 - [Install on Ubuntu](#install-on-ubuntu)
 - [Install for local development](#install-for-local-development)
@@ -28,6 +29,102 @@ Built with Laravel 12, MySQL 8, Inertia and Vue 3.
 - [Scheduling and queue](#scheduling-and-queue)
 - [How the table is extended](#how-the-table-is-extended)
 - [Tests](#tests)
+
+## Trying it out
+
+Start to finish this takes about ten minutes, most of it waiting for Composer.
+
+**1. Install the project**
+
+```bash
+git clone git@github.com:JevgenBalashov/test-bulls.git
+cd test-bulls
+composer install
+npm install && npm run build
+
+cp .env.example .env
+php artisan key:generate
+```
+
+**2. Create the database**
+
+```sql
+CREATE DATABASE sheets_sync CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+Put your credentials in `.env` (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`),
+then:
+
+```bash
+php artisan migrate --seed
+```
+
+The seeder creates the login and a ready-made configuration pointing at two
+example spreadsheets that are shared for reading, so there is nothing to fill in
+by hand.
+
+**3. Add a Google key**
+
+The importer needs a service account of your own. It takes a few minutes and is
+described step by step in [Google API access](#google-api-access). The short
+version: create a project, enable the Sheets API, create a service account,
+download its JSON key and save it as
+`storage/app/google/credentials.json`.
+
+**4. Run the import**
+
+```bash
+php artisan sheets:import --sync
+```
+
+Expected output:
+
+```
+Sales Report EU .................. success, 7 rows written
+Sales Report US .................. partial, 3 rows written
+```
+
+`partial` is intentional: one row in the second sheet holds `n/a` where a price
+is expected. That row is skipped and the reason is recorded, while the rest of
+the sheet is imported.
+
+**5. Open the interface**
+
+```bash
+php artisan serve
+```
+
+Go to http://127.0.0.1:8000 and sign in with `admin@example.com` / `password`.
+
+### What to look at
+
+| Requirement | Where to see it |
+| --- | --- |
+| Different column order and extra columns | The two example sheets use different header names and order, and both land in `sales`. Compare them on the source screens. |
+| List of files, tabs and columns is configurable | **Sources** screen, and the detail screen behind any source. Everything is editable there. |
+| Matching between file and table | **Source detail**, the column table under each target table. |
+| One file into several tables | Source **Sales Report EU**: its single tab feeds both `sales` and `products`. |
+| New column triggers `ALTER TABLE` | Add a column to a mapping and it is marked **will be added**. Run the import and it appears in the database, listed in the run journal. |
+| Daily automation | `php artisan schedule:list` shows `0 3 * * *`. |
+| Import history | **Import runs** screen, with rows read, written and skipped per table. |
+
+A quick way to see the `ALTER TABLE` behaviour: on **Sales Report EU** add the
+column `region` of type `string` to the `sales` mapping, press **Import now**,
+and watch it show up both in the journal and in the table.
+
+To follow the raw data instead:
+
+```bash
+php artisan sheets:read <spreadsheet-id> 'Daily Sales'
+```
+
+prints the sheet exactly the way the importer sees it.
+
+```bash
+php artisan test
+```
+
+runs the suite, which needs neither MySQL nor Google access.
 
 ## Requirements
 
